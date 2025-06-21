@@ -21,7 +21,7 @@ public class LeagueController {
     @Autowired
     private GetLeagueByIdUseCase getLeagueByIdUseCase;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Object> createUser(@Valid @RequestBody LeagueEntity league) {
         try {
             var result = this.createLeagueUseCase.execute(league);

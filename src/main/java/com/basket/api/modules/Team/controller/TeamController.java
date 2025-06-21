@@ -20,7 +20,7 @@ public class TeamController {
     @Autowired
     private ListTeamUseCase listTeamUseCase;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Object> createTeam(@Valid @RequestBody TeamEntity teamEntity) {
         try {
             var result = this.createTeamUseCase.execute(teamEntity);

@@ -17,7 +17,7 @@ public class PlayerController {
     @Autowired
     private CreatePlayerUseCase createPlayerUseCase;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Object> Create(@Valid @RequestBody PlayerEntity playerEntity) {
         try {
             var result = createPlayerUseCase.execute(playerEntity);

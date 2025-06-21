@@ -17,7 +17,7 @@ public class UseController {
     @Autowired
     private CreateUserUseCase createUserUseCase;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Object> createUser(@Valid @RequestBody UserEntity userEntity) {
         try {
             var result = this.createUserUseCase.execute(userEntity);
