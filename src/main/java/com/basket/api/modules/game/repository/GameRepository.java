@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface GameRepository extends JpaRepository<GameEntity, UUID> {
-    List<GameEntity> listGameByLeagueId(UUID leagueId)
+    List<GameEntity> findByLeagueId(UUID leagueId);
 }
