@@ -4,12 +4,14 @@ import com.basket.api.modules.Team.entity.TeamEntity;
 import com.basket.api.modules.game.entity.GameEntity;
 import com.basket.api.modules.player.entity.PlayerEntity;
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity(name = "game_events")
+@Data
 public class GameEventEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
