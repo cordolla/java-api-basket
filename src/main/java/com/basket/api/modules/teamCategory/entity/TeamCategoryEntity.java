@@ -18,7 +18,6 @@ public class TeamCategoryEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id", nullable = false)
-    @JsonBackReference
     private TeamEntity team;
 
     @ManyToOne(fetch = FetchType.LAZY)

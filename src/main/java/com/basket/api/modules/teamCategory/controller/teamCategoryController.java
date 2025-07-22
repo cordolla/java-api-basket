@@ -2,6 +2,7 @@ package com.basket.api.modules.teamCategory.controller;
 
 import com.basket.api.modules.teamCategory.records.ListCategoryDTO;
 import com.basket.api.modules.teamCategory.records.TeamCategoryRequestDTO;
+import com.basket.api.modules.teamCategory.records.TeamCategoryResponseDTO;
 import com.basket.api.modules.teamCategory.useCases.AddTeamToCategoryUseCase;
 import com.basket.api.modules.teamCategory.useCases.ListTeamCategoryUseCase;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class teamCategoryController {
     }
 
     @PostMapping("{teamId}/categoryId/{categoryId}")
-    public ResponseEntity<Object> AddTeamToCategory(@PathVariable UUID teamId, @PathVariable UUID categoryId) {
+    public ResponseEntity<TeamCategoryResponseDTO> AddTeamToCategory(@PathVariable UUID teamId, @PathVariable UUID categoryId) {
         TeamCategoryRequestDTO requestDTO = new TeamCategoryRequestDTO(teamId, categoryId);
         var result = this.addTeamToCategoryUseCase.execute(requestDTO);
         return ResponseEntity.ok(result);
