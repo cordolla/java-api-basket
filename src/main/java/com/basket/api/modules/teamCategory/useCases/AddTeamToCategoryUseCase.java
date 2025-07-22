@@ -6,11 +6,10 @@ import com.basket.api.modules.team.entity.TeamEntity;
 import com.basket.api.modules.team.repository.TeamRepository;
 import com.basket.api.modules.teamCategory.entity.TeamCategoryEntity;
 import com.basket.api.modules.teamCategory.records.TeamCategoryRequestDTO;
+import com.basket.api.modules.teamCategory.records.TeamCategoryResponseDTO;
 import com.basket.api.modules.teamCategory.repository.TeamCategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 
 @Service
@@ -27,7 +26,7 @@ public class AddTeamToCategoryUseCase {
     }
 
     @Transactional
-    public TeamCategoryEntity execute(TeamCategoryRequestDTO teamCategoryRequestDTO) {
+    public TeamCategoryResponseDTO execute(TeamCategoryRequestDTO teamCategoryRequestDTO) {
         TeamEntity team = teamRepository.findById(teamCategoryRequestDTO.teamId())
                 .orElseThrow(() -> new RuntimeException("Time não existe"));
 
@@ -44,6 +43,14 @@ public class AddTeamToCategoryUseCase {
         teamCategory.setCategory(category);
         teamCategory.setTeam(team);
 
-        return teamCategoryRepository.save(teamCategory);
+        TeamCategoryEntity savedEntity = teamCategoryRepository.save(teamCategory);
+
+        return new TeamCategoryResponseDTO(
+                savedEntity.getId(),
+                savedEntity.getTeam().getId(),
+                savedEntity.getCategory().getId(),
+                savedEntity.getTeam().getName(),
+                savedEntity.getCategory().getName()
+        );
     }
 }

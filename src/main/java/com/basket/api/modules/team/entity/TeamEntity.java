@@ -28,7 +28,6 @@ public class TeamEntity {
     private Integer ranking;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<TeamCategoryEntity> categoryEntityList;
 
     @CreationTimestamp
