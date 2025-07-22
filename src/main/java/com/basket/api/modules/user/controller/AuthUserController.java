@@ -1,7 +1,7 @@
 package com.basket.api.modules.user.controller;
 
 
-import com.basket.api.modules.user.dto.AuthUserRequestDTO;
+import com.basket.api.modules.user.records.AuthUserRequestDTO;
 import com.basket.api.modules.user.useCases.AuthUserUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

@@ -4,6 +4,7 @@ import com.basket.api.modules.league.entity.LeagueEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,18 +16,20 @@ import java.util.UUID;
 @Data
 @Entity(name = "users")
 public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String name;
 
+    @Column(unique = true, nullable = false)
     @Email( message = "O campo [email] deve ser um email válido" )
     private String email;
 
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<LeagueEntity> leagues;
 

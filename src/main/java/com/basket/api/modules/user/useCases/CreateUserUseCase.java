@@ -2,19 +2,19 @@ package com.basket.api.modules.user.useCases;
 
 import com.basket.api.modules.user.entity.UserEntity;
 import com.basket.api.modules.user.repositories.UserRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CreateUserUseCase {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public CreateUserUseCase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public UserEntity execute(UserEntity userEntity) {
         this.userRepository

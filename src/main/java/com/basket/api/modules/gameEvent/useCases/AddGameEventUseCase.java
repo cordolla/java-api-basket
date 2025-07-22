@@ -1,6 +1,6 @@
 package com.basket.api.modules.gameEvent.useCases;
 
-import com.basket.api.modules.gameEvent.dto.GameEventRequestDTO;
+import com.basket.api.modules.gameEvent.records.GameEventRequestDTO;
 import com.basket.api.modules.gameEvent.entity.GameEventEntity;
 import com.basket.api.modules.gameEvent.repository.GameEventRepository;
 import com.basket.api.modules.team.entity.TeamEntity;
@@ -9,33 +9,33 @@ import com.basket.api.modules.game.entity.GameEntity;
 import com.basket.api.modules.game.repository.GameRepository;
 import com.basket.api.modules.player.entity.PlayerEntity;
 import com.basket.api.modules.player.repository.PlayerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AddGameEventUseCase {
-    @Autowired
-    private GameEventRepository gameEventRepository;
 
-    @Autowired
-    private GameRepository gameRepository;
+    private final GameEventRepository gameEventRepository;
+    private final GameRepository gameRepository;
+    private final PlayerRepository playerRepository;
+    private final  TeamRepository teamRepository;
 
-    @Autowired
-    private PlayerRepository playerRepository;
-
-    @Autowired
-    private TeamRepository teamRepository;
+    public AddGameEventUseCase(GameEventRepository gameEventRepository, GameRepository gameRepository, PlayerRepository playerRepository, TeamRepository teamRepository) {
+        this.gameEventRepository = gameEventRepository;
+        this.gameRepository = gameRepository;
+        this.playerRepository = playerRepository;
+        this.teamRepository = teamRepository;
+    }
 
     public GameEventEntity execute(GameEventRequestDTO gameEventRequestDTO) {
-        GameEntity game = gameRepository.findById(gameEventRequestDTO.getGameId())
+        GameEntity game = gameRepository.findById(gameEventRequestDTO.gameId())
                 .orElseThrow(() -> new RuntimeException("Game not found"));
 
-        TeamEntity team = teamRepository.findById(gameEventRequestDTO.getTeamId())
+        TeamEntity team = teamRepository.findById(gameEventRequestDTO.teamId())
                 .orElseThrow(() -> new RuntimeException("Team not found"));
 
         PlayerEntity player = null;
-        if (gameEventRequestDTO.getPlayerId() != null) {
-            player = playerRepository.findById(gameEventRequestDTO.getPlayerId())
+        if (gameEventRequestDTO.playerId() != null) {
+            player = playerRepository.findById(gameEventRequestDTO.playerId())
                     .orElseThrow(() -> new RuntimeException("Player not found"));
         }
 
@@ -43,9 +43,9 @@ public class AddGameEventUseCase {
         event.setGame(game);
         event.setTeam(team);
         event.setPlayer(player);
-        event.setEventType(gameEventRequestDTO.getEventType());
-        event.setEventTime(gameEventRequestDTO.getEventTime());
-        event.setPoints(gameEventRequestDTO.getPoints());
+        event.setEventType(gameEventRequestDTO.eventType());
+        event.setEventTime(gameEventRequestDTO.eventTime());
+        event.setPoints(gameEventRequestDTO.points());
 
         return gameEventRepository.save(event);
     }

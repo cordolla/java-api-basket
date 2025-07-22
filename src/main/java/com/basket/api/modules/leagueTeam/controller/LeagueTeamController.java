@@ -1,9 +1,8 @@
 package com.basket.api.modules.leagueTeam.controller;
 
-import com.basket.api.modules.leagueTeam.dto.ListTeamDTO;
+import com.basket.api.modules.leagueTeam.records.ListTeamDTO;
 import com.basket.api.modules.leagueTeam.useCases.AddTeamToLeagueUseCase;
 import com.basket.api.modules.leagueTeam.useCases.ListLeagueTeamsUseCase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

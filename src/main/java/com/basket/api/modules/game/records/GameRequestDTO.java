@@ -1,4 +1,4 @@
-package com.basket.api.modules.game.dto;
+package com.basket.api.modules.game.records;
 
 import com.basket.api.modules.game.entity.GameStatus;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,6 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class GameRequestDTO {
 
     private UUID leagueId;

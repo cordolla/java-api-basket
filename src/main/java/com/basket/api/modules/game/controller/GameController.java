@@ -1,6 +1,6 @@
 package com.basket.api.modules.game.controller;
 
-import com.basket.api.modules.game.dto.GameRequestDTO;
+import com.basket.api.modules.game.records.GameRequestDTO;
 import com.basket.api.modules.game.entity.GameEntity;
 import com.basket.api.modules.game.useCases.CreateGameUseCase;
 import com.basket.api.modules.game.useCases.ListGameByLeagueIdUseCase;

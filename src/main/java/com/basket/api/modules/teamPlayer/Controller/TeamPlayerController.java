@@ -1,10 +1,9 @@
 package com.basket.api.modules.teamPlayer.Controller;
 
-import com.basket.api.modules.teamPlayer.dto.ListPlayersDTO;
-import com.basket.api.modules.teamPlayer.dto.TeamPlayerRequestDTO;
+import com.basket.api.modules.teamPlayer.records.ListPlayersDTO;
+import com.basket.api.modules.teamPlayer.records.TeamPlayerRequestDTO;
 import com.basket.api.modules.teamPlayer.useCases.AddTeamPlayerUseCase;
 import com.basket.api.modules.teamPlayer.useCases.ListPlayerByTeamUseCase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
