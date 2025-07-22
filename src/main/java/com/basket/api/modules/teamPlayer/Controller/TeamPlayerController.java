@@ -26,7 +26,7 @@ public class TeamPlayerController {
     @PostMapping("/{teamId}/add/player/{playerId}")
     public ResponseEntity<Object> addPlayerToTeam(@PathVariable UUID teamId, @PathVariable UUID playerId) {
         TeamPlayerRequestDTO requestDTO = new TeamPlayerRequestDTO(playerId, teamId);
-        var result = addTeamPlayerUseCase.execute(requestDTO);
+        var result = this.addTeamPlayerUseCase.execute(requestDTO);
         return ResponseEntity.ok(result);
     }
 

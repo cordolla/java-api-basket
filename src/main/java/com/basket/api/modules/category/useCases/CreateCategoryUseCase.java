@@ -15,11 +15,13 @@ public class CreateCategoryUseCase {
     }
 
     public CategoryEntity execute(CategoryRequestDTO categoryRequestDTO) {
-        CategoryEntity categoryEntity = categoryRepository.findByName(categoryRequestDTO.name())
-                .orElseThrow(() -> new RuntimeException("category already exists"));
+        if (categoryRepository.findByName(categoryRequestDTO.name()).isPresent()){
+            throw new RuntimeException("Category already exists");
+        }
 
         CategoryEntity category = new CategoryEntity();
         category.setName(categoryRequestDTO.name());
+        category.setDescription(categoryRequestDTO.description());
         category.setCategoryGender(categoryRequestDTO.categoryGender());
 
         return categoryRepository.save(category);

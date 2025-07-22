@@ -1,6 +1,7 @@
 package com.basket.api.modules.team.controller;
 
 import com.basket.api.modules.team.entity.TeamEntity;
+import com.basket.api.modules.team.records.TeamResponseDTO;
 import com.basket.api.modules.team.useCases.CreateTeamUseCase;
 import com.basket.api.modules.team.useCases.ListTeamUseCase;
 import jakarta.validation.Valid;
@@ -29,7 +30,7 @@ public class TeamController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TeamEntity> getTeam(@PathVariable UUID id) {
+    public ResponseEntity<TeamResponseDTO> getTeam(@PathVariable UUID id) {
         var result = this.listTeamUseCase.execute(id);
         return ResponseEntity.ok().body(result);
     }
