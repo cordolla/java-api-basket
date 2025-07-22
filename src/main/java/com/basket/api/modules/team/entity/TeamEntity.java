@@ -1,11 +1,14 @@
 package com.basket.api.modules.team.entity;
 
+import com.basket.api.modules.teamCategory.entity.TeamCategoryEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -23,6 +26,10 @@ public class TeamEntity {
     private String location;
     private String description;
     private Integer ranking;
+
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<TeamCategoryEntity> categoryEntityList;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
