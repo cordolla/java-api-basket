@@ -11,6 +11,9 @@ import java.util.UUID;
 
 @Data
 @Entity(name = "league_team")
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"league_id", "team_id"}, name = "uk_league_team")
+})
 public class LeagueTeamEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

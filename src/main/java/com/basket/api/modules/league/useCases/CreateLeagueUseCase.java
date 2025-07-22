@@ -9,11 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CreateLeagueUseCase {
 
-    @Autowired
-    private LeagueRepository leagueRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final LeagueRepository leagueRepository;
+    private final UserRepository userRepository;
+
+    public CreateLeagueUseCase(LeagueRepository leagueRepository, UserRepository userRepository) {
+        this.leagueRepository = leagueRepository;
+        this.userRepository = userRepository;
+    }
 
     public LeagueEntity execute(LeagueEntity leagueEntity) {
         if (leagueRepository.findByName(leagueEntity.getName()).isPresent()) {

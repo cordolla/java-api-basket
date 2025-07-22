@@ -1,6 +1,6 @@
 package com.basket.api.modules.game.useCases;
 
-import com.basket.api.modules.game.dto.GameRequestDTO;
+import com.basket.api.modules.game.records.GameRequestDTO;
 import com.basket.api.modules.game.entity.GameEntity;
 import com.basket.api.modules.game.entity.GameStatus;
 import com.basket.api.modules.game.repository.GameRepository;
@@ -8,20 +8,20 @@ import com.basket.api.modules.league.entity.LeagueEntity;
 import com.basket.api.modules.league.repository.LeagueRepository;
 import com.basket.api.modules.team.entity.TeamEntity;
 import com.basket.api.modules.team.repository.TeamRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CreateGameUseCase {
 
-    @Autowired
-    private GameRepository gameRepository;
+    private final GameRepository gameRepository;
+    private final LeagueRepository leagueRepository;
+    private final TeamRepository teamRepository;
 
-    @Autowired
-    private LeagueRepository leagueRepository;
-
-    @Autowired
-    private TeamRepository teamRepository;
+    public CreateGameUseCase(GameRepository gameRepository, LeagueRepository leagueRepository, TeamRepository teamRepository) {
+        this.gameRepository = gameRepository;
+        this.leagueRepository = leagueRepository;
+        this.teamRepository = teamRepository;
+    }
 
     public GameEntity execute(GameRequestDTO gameRequestDTO) {
         LeagueEntity league = leagueRepository.findById(gameRequestDTO.getLeagueId())

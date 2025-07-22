@@ -2,13 +2,12 @@ package com.basket.api.modules.teamPlayer.useCases;
 
 import com.basket.api.modules.team.entity.TeamEntity;
 import com.basket.api.modules.team.repository.TeamRepository;
-import com.basket.api.modules.teamPlayer.dto.TeamPlayerRequestDTO;
+import com.basket.api.modules.teamPlayer.records.TeamPlayerRequestDTO;
 import com.basket.api.modules.teamPlayer.entity.TeamPlayerEntity;
 import com.basket.api.modules.teamPlayer.repository.TeamPlayerRepository;
 import com.basket.api.modules.player.entity.PlayerEntity;
 import com.basket.api.modules.player.repository.PlayerRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,14 +16,15 @@ import java.util.Optional;
 @Service
 public class AddTeamPlayerUseCase {
 
-    @Autowired
-    private TeamPlayerRepository teamPlayerRepository;
+    private final TeamPlayerRepository teamPlayerRepository;
+    private final TeamRepository teamRepository;
+    private final PlayerRepository playerRepository;
 
-    @Autowired
-    private TeamRepository teamRepository;
-
-    @Autowired
-    private PlayerRepository playerRepository;
+    public AddTeamPlayerUseCase(TeamPlayerRepository teamPlayerRepository, TeamRepository teamRepository, PlayerRepository playerRepository) {
+        this.teamPlayerRepository = teamPlayerRepository;
+        this.teamRepository = teamRepository;
+        this.playerRepository = playerRepository;
+    }
 
     @Transactional
     public TeamPlayerEntity execute(TeamPlayerRequestDTO teamPlayerRequestDTO) {

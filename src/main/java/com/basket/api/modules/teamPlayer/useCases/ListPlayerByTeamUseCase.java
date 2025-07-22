@@ -1,10 +1,9 @@
 package com.basket.api.modules.teamPlayer.useCases;
 
-import com.basket.api.modules.teamPlayer.dto.ListPlayersDTO;
+import com.basket.api.modules.teamPlayer.records.ListPlayersDTO;
 import com.basket.api.modules.teamPlayer.entity.TeamPlayerEntity;
 import com.basket.api.modules.teamPlayer.repository.TeamPlayerRepository;
 import com.basket.api.modules.player.entity.PlayerEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,11 @@ import java.util.UUID;
 @Service
 public class ListPlayerByTeamUseCase {
 
-    @Autowired
-    private TeamPlayerRepository teamPlayerRepository;
+    private final TeamPlayerRepository teamPlayerRepository;
+
+    public ListPlayerByTeamUseCase(TeamPlayerRepository teamPlayerRepository) {
+        this.teamPlayerRepository = teamPlayerRepository;
+    }
 
     public List<ListPlayersDTO> execute(UUID teamId) {
         List<TeamPlayerEntity> teamPlayers = teamPlayerRepository.findByTeamIdAndIsActive(teamId, true);

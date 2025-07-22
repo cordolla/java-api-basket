@@ -7,7 +7,6 @@ import com.basket.api.modules.team.entity.TeamEntity;
 import com.basket.api.modules.team.repository.TeamRepository;
 import com.basket.api.modules.league.entity.LeagueEntity;
 import com.basket.api.modules.league.repository.LeagueRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -15,21 +14,22 @@ import java.util.UUID;
 @Service
 public class AddTeamToLeagueUseCase {
 
-    @Autowired
-    private LeagueTeamRepository leagueTeamRepository;
+    private final LeagueTeamRepository leagueTeamRepository;
+    private final TeamRepository teamRepository;
+    private final LeagueRepository leagueRepository;
 
-    @Autowired
-    private TeamRepository teamRepository;
-
-    @Autowired
-    private LeagueRepository leagueRepository;
+    public AddTeamToLeagueUseCase(LeagueTeamRepository leagueTeamRepository, TeamRepository teamRepository, LeagueRepository leagueRepository) {
+        this.leagueTeamRepository = leagueTeamRepository;
+        this.teamRepository = teamRepository;
+        this.leagueRepository = leagueRepository;
+    }
 
     public LeagueTeamEntity execute(UUID leagueId, UUID teamId) {
         LeagueEntity league = leagueRepository.findById(leagueId)
-                .orElseThrow(() -> new RuntimeException("League not found"));
+                .orElseThrow(() -> new RuntimeException("League não existe"));
 
         TeamEntity team = teamRepository.findById(teamId)
-                .orElseThrow(() -> new RuntimeException("Team not found"));
+                .orElseThrow(() -> new RuntimeException("Time não existe"));
 
         boolean exists = leagueTeamRepository.existsByLeagueAndTeam(league, team);
         if (exists) {

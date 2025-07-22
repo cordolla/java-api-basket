@@ -1,6 +1,6 @@
 package com.basket.api.modules.gameEvent.controller;
 
-import com.basket.api.modules.gameEvent.dto.GameEventRequestDTO;
+import com.basket.api.modules.gameEvent.records.GameEventRequestDTO;
 import com.basket.api.modules.gameEvent.entity.GameEventEntity;
 import com.basket.api.modules.gameEvent.useCases.AddGameEventUseCase;
 import org.springframework.http.ResponseEntity;

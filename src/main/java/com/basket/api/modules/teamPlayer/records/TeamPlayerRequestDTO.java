@@ -1,4 +1,4 @@
-package com.basket.api.modules.teamPlayer.dto;
+package com.basket.api.modules.teamPlayer.records;
 
 import java.util.UUID;
 

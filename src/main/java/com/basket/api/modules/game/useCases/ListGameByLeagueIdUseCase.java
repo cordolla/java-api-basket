@@ -12,10 +12,13 @@ import java.util.UUID;
 @Service
 public class ListGameByLeagueIdUseCase {
 
-    @Autowired
-    private GameRepository gameRepository;
+    private final GameRepository gameRepository;
 
-    public List<GameEntity> execute(UUID leagueId){
+    public ListGameByLeagueIdUseCase(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
+
+    public List<GameEntity> execute(UUID leagueId) {
         return gameRepository.findByLeagueId(leagueId);
     }
 }
