@@ -4,7 +4,6 @@ import com.basket.api.modules.game.dto.GameRequestDTO;
 import com.basket.api.modules.game.entity.GameEntity;
 import com.basket.api.modules.game.useCases.CreateGameUseCase;
 import com.basket.api.modules.game.useCases.ListGameByLeagueIdUseCase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,29 +14,24 @@ import java.util.UUID;
 @RequestMapping("/games")
 public class GameController {
 
-    @Autowired
-    private CreateGameUseCase createGameUseCase;
 
-    @Autowired
-    private ListGameByLeagueIdUseCase listGameByLeagueIdUseCase;
+    private final CreateGameUseCase createGameUseCase;
+    private final ListGameByLeagueIdUseCase listGameByLeagueIdUseCase;
+
+    public GameController(CreateGameUseCase createGameUseCase, ListGameByLeagueIdUseCase listGameByLeagueIdUseCase) {
+        this.createGameUseCase = createGameUseCase;
+        this.listGameByLeagueIdUseCase = listGameByLeagueIdUseCase;
+    }
 
     @PostMapping
     public ResponseEntity<GameEntity> createGame(@RequestBody GameRequestDTO gameRequestDTO) {
-        try {
-            GameEntity game = createGameUseCase.execute(gameRequestDTO);
-            return ResponseEntity.ok(game);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        GameEntity game = createGameUseCase.execute(gameRequestDTO);
+        return ResponseEntity.ok(game);
     }
 
     @GetMapping("/league/{id}")
     public ResponseEntity<List<GameEntity>> listGamesByLeague(@PathVariable UUID id) {
-        try {
-            List<GameEntity> list = listGameByLeagueIdUseCase.execute(id);
-            return ResponseEntity.ok(list);
-        }catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        List<GameEntity> list = listGameByLeagueIdUseCase.execute(id);
+        return ResponseEntity.ok(list);
     }
 }

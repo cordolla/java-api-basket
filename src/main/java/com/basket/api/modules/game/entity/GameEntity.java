@@ -1,6 +1,6 @@
 package com.basket.api.modules.game.entity;
 
-import com.basket.api.modules.Team.entity.TeamEntity;
+import com.basket.api.modules.team.entity.TeamEntity;
 import com.basket.api.modules.league.entity.LeagueEntity;
 import jakarta.persistence.*;
 import lombok.Data;

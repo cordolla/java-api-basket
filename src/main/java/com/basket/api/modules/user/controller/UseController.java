@@ -19,11 +19,7 @@ public class UseController {
 
     @PostMapping
     public ResponseEntity<Object> createUser(@Valid @RequestBody UserEntity userEntity) {
-        try {
-            var result = this.createUserUseCase.execute(userEntity);
-            return ResponseEntity.ok().body(result);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        var result = this.createUserUseCase.execute(userEntity);
+        return ResponseEntity.ok().body(result);
     }
 }

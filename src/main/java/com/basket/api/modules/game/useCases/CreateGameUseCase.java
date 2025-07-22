@@ -6,8 +6,8 @@ import com.basket.api.modules.game.entity.GameStatus;
 import com.basket.api.modules.game.repository.GameRepository;
 import com.basket.api.modules.league.entity.LeagueEntity;
 import com.basket.api.modules.league.repository.LeagueRepository;
-import com.basket.api.modules.Team.entity.TeamEntity;
-import com.basket.api.modules.Team.repository.TeamRepository;
+import com.basket.api.modules.team.entity.TeamEntity;
+import com.basket.api.modules.team.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
