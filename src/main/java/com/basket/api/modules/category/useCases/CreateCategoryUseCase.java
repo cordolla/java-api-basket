@@ -1,5 +1,7 @@
 package com.basket.api.modules.category.useCases;
 
+import com.basket.api.exception.BusinessRuleException;
+import com.basket.api.exception.ResourceNotFoundException;
 import com.basket.api.modules.category.dto.CategoryRequestDTO;
 import com.basket.api.modules.category.entity.CategoryEntity;
 import com.basket.api.modules.category.repository.CategoryRepository;
@@ -16,7 +18,7 @@ public class CreateCategoryUseCase {
 
     public CategoryEntity execute(CategoryRequestDTO categoryRequestDTO) {
         if (categoryRepository.findByName(categoryRequestDTO.name()).isPresent()){
-            throw new RuntimeException("Category already exists");
+            throw new BusinessRuleException("Categoria não existe");
         }
 
         CategoryEntity category = new CategoryEntity();

@@ -1,7 +1,6 @@
 package com.basket.api.modules.league.repository;
 
 import com.basket.api.modules.league.entity.LeagueEntity;
-import com.basket.api.modules.user.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

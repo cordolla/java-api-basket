@@ -1,5 +1,7 @@
 package com.basket.api.modules.leagueTeam.useCases;
 
+import com.basket.api.exception.BusinessRuleException;
+import com.basket.api.exception.ResourceNotFoundException;
 import com.basket.api.modules.leagueTeam.entity.LeagueTeamEntity;
 import com.basket.api.modules.leagueTeam.entity.TeamStatus;
 import com.basket.api.modules.leagueTeam.repository.LeagueTeamRepository;
@@ -26,14 +28,14 @@ public class AddTeamToLeagueUseCase {
 
     public LeagueTeamEntity execute(UUID leagueId, UUID teamId) {
         LeagueEntity league = leagueRepository.findById(leagueId)
-                .orElseThrow(() -> new RuntimeException("League não existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("League não existe"));
 
         TeamEntity team = teamRepository.findById(teamId)
-                .orElseThrow(() -> new RuntimeException("Time não existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("Time não existe"));
 
         boolean exists = leagueTeamRepository.existsByLeagueAndTeam(league, team);
         if (exists) {
-            throw new RuntimeException("Team already added to this league");
+            throw new BusinessRuleException("Team already added to this league");
         }
 
         // Criar associação

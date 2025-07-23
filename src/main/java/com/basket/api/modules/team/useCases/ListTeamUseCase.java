@@ -1,5 +1,6 @@
 package com.basket.api.modules.team.useCases;
 
+import com.basket.api.exception.ResourceNotFoundException;
 import com.basket.api.modules.category.dto.CategoryResponseDTO;
 import com.basket.api.modules.team.entity.TeamEntity;
 import com.basket.api.modules.team.records.TeamResponseDTO;
@@ -21,7 +22,7 @@ public class ListTeamUseCase {
 
     public TeamResponseDTO execute(UUID id) {
         TeamEntity team = teamRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Team not exists"));
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found with ID: " + id));
 
         List<CategoryResponseDTO> categoryDTOs = team.getCategoryEntityList()
                 .stream()
