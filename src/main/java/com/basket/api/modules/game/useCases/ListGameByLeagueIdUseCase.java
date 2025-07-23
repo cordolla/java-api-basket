@@ -2,8 +2,6 @@ package com.basket.api.modules.game.useCases;
 
 import com.basket.api.modules.game.entity.GameEntity;
 import com.basket.api.modules.game.repository.GameRepository;
-import com.basket.api.modules.league.repository.LeagueRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

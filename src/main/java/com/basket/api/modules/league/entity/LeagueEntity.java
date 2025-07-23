@@ -31,7 +31,7 @@ public class LeagueEntity {
     private LeagueStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) // Nome da coluna que será usada para a chave estrangeira
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
     @CreationTimestamp

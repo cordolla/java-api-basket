@@ -1,5 +1,7 @@
 package com.basket.api.modules.teamCategory.useCases;
 
+import com.basket.api.exception.BusinessRuleException;
+import com.basket.api.exception.ResourceNotFoundException;
 import com.basket.api.modules.category.entity.CategoryEntity;
 import com.basket.api.modules.category.repository.CategoryRepository;
 import com.basket.api.modules.team.entity.TeamEntity;
@@ -28,14 +30,14 @@ public class AddTeamToCategoryUseCase {
     @Transactional
     public TeamCategoryResponseDTO execute(TeamCategoryRequestDTO teamCategoryRequestDTO) {
         TeamEntity team = teamRepository.findById(teamCategoryRequestDTO.teamId())
-                .orElseThrow(() -> new RuntimeException("Time não existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("Time não existe"));
 
         CategoryEntity category = categoryRepository.findById(teamCategoryRequestDTO.categoryId())
-                .orElseThrow(() -> new RuntimeException("Categoria não existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria não existe"));
 
         boolean exists = teamCategoryRepository.existsByTeamAndCategory(team, category);
         if (exists) {
-            throw new RuntimeException("Ja existe um time com essa categoria");
+            throw new BusinessRuleException("Ja existe um time com essa categoria");
         }
 
         //criar associação

@@ -1,5 +1,7 @@
 package com.basket.api.modules.teamPlayer.useCases;
 
+import com.basket.api.exception.BusinessRuleException;
+import com.basket.api.exception.ResourceNotFoundException;
 import com.basket.api.modules.team.entity.TeamEntity;
 import com.basket.api.modules.team.repository.TeamRepository;
 import com.basket.api.modules.teamPlayer.records.TeamPlayerRequestDTO;
@@ -29,14 +31,14 @@ public class AddTeamPlayerUseCase {
     @Transactional
     public TeamPlayerEntity execute(TeamPlayerRequestDTO teamPlayerRequestDTO) {
         TeamEntity team = teamRepository.findById(teamPlayerRequestDTO.teamId())
-                .orElseThrow(() -> new RuntimeException("Team not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found"));
 
         PlayerEntity player = playerRepository.findById(teamPlayerRequestDTO.playerId())
-                .orElseThrow(() -> new RuntimeException("Player not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Player not found"));
 
         Optional<TeamPlayerEntity> existingAssociation = teamPlayerRepository.findByTeamAndPlayerAndIsActive(team, player, true);
         if (existingAssociation.isPresent()) {
-            throw new RuntimeException("Player is already in this team");
+            throw new BusinessRuleException("Player is already in this team");
         }
 
         teamPlayerRepository.desactivatePreviousAssociations(player);

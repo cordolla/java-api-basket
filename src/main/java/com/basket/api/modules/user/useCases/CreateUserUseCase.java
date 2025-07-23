@@ -1,5 +1,6 @@
 package com.basket.api.modules.user.useCases;
 
+import com.basket.api.exception.BusinessRuleException;
 import com.basket.api.modules.user.entity.UserEntity;
 import com.basket.api.modules.user.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +21,7 @@ public class CreateUserUseCase {
         this.userRepository
                 .findByEmail(userEntity.getEmail())
                 .ifPresent((user) -> {
-                    throw new Error("Email already exists");
+                    throw new BusinessRuleException("Email already exists: " + userEntity.getEmail());
                 });
 
         var password = this.passwordEncoder.encode(userEntity.getPassword());

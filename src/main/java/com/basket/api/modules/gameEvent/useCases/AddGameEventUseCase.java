@@ -1,5 +1,6 @@
 package com.basket.api.modules.gameEvent.useCases;
 
+import com.basket.api.exception.ResourceNotFoundException;
 import com.basket.api.modules.gameEvent.records.GameEventRequestDTO;
 import com.basket.api.modules.gameEvent.entity.GameEventEntity;
 import com.basket.api.modules.gameEvent.repository.GameEventRepository;
@@ -28,15 +29,15 @@ public class AddGameEventUseCase {
 
     public GameEventEntity execute(GameEventRequestDTO gameEventRequestDTO) {
         GameEntity game = gameRepository.findById(gameEventRequestDTO.gameId())
-                .orElseThrow(() -> new RuntimeException("Game not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Game not found"));
 
         TeamEntity team = teamRepository.findById(gameEventRequestDTO.teamId())
-                .orElseThrow(() -> new RuntimeException("Team not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found"));
 
         PlayerEntity player = null;
         if (gameEventRequestDTO.playerId() != null) {
             player = playerRepository.findById(gameEventRequestDTO.playerId())
-                    .orElseThrow(() -> new RuntimeException("Player not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Player not found"));
         }
 
         GameEventEntity event = new GameEventEntity();

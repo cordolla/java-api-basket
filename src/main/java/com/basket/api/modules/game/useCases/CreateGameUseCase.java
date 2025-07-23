@@ -1,5 +1,7 @@
 package com.basket.api.modules.game.useCases;
 
+import com.basket.api.exception.BusinessRuleException;
+import com.basket.api.exception.ResourceNotFoundException;
 import com.basket.api.modules.game.records.GameRequestDTO;
 import com.basket.api.modules.game.entity.GameEntity;
 import com.basket.api.modules.game.entity.GameStatus;
@@ -24,26 +26,26 @@ public class CreateGameUseCase {
     }
 
     public GameEntity execute(GameRequestDTO gameRequestDTO) {
-        LeagueEntity league = leagueRepository.findById(gameRequestDTO.getLeagueId())
-                .orElseThrow(() -> new RuntimeException("League not found"));
+        LeagueEntity league = leagueRepository.findById(gameRequestDTO.leagueId())
+                .orElseThrow(() -> new ResourceNotFoundException("League not found"));
 
-        TeamEntity homeTeam = teamRepository.findById(gameRequestDTO.getHomeTeamId())
-                .orElseThrow(() -> new RuntimeException("Home team not found"));
+        TeamEntity homeTeam = teamRepository.findById(gameRequestDTO.homeTeamId())
+                .orElseThrow(() -> new ResourceNotFoundException("Home team not found"));
 
-        TeamEntity awayTeam = teamRepository.findById(gameRequestDTO.getAwayTeamId())
-                .orElseThrow(() -> new RuntimeException("Away team not found"));
+        TeamEntity awayTeam = teamRepository.findById(gameRequestDTO.awayTeamId())
+                .orElseThrow(() -> new ResourceNotFoundException("Away team not found"));
 
         if (homeTeam.equals(awayTeam)) {
-            throw new RuntimeException("Home team and away team cannot be the same");
+            throw new BusinessRuleException("Home team and away team cannot be the same");
         }
 
         GameEntity game = new GameEntity();
         game.setLeague(league);
         game.setHomeTeam(homeTeam);
         game.setAwayTeam(awayTeam);
-        game.setVenue(gameRequestDTO.getVenue());
-        game.setScheduledDate(gameRequestDTO.getScheduledDate());
-        game.setStatus(gameRequestDTO.getStatus() != null ? gameRequestDTO.getStatus() : GameStatus.SCHEDULED);
+        game.setVenue(gameRequestDTO.venue());
+        game.setScheduledDate(gameRequestDTO.scheduledDate());
+        game.setStatus(gameRequestDTO.status() != null ? gameRequestDTO.status() : GameStatus.SCHEDULED);
 
         return gameRepository.save(game);
     }
