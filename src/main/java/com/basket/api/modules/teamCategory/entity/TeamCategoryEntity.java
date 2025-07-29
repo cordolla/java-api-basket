@@ -3,6 +3,7 @@ package com.basket.api.modules.teamCategory.entity;
 import com.basket.api.modules.category.entity.CategoryEntity;
 import com.basket.api.modules.team.entity.TeamEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
 

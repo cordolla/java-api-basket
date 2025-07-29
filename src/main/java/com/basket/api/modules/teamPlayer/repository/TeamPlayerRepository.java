@@ -17,6 +17,8 @@ public interface TeamPlayerRepository extends JpaRepository<TeamPlayerEntity, UU
     Optional<TeamPlayerEntity> findByTeamAndPlayerAndIsActive(TeamEntity team, PlayerEntity player, Boolean isActive);
     List<TeamPlayerEntity> findByTeamIdAndIsActive(UUID teamId,  Boolean isActive);
 
+    List<TeamPlayerEntity> findByPlayerAndIsActive(PlayerEntity player, Boolean isActive);
+
     @Modifying
     @Transactional
     @Query("UPDATE team_player tp SET tp.isActive = false, tp.endDate = CURRENT_TIMESTAMP WHERE tp.player = :player AND tp.isActive = true")
