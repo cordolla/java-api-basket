@@ -18,7 +18,7 @@ public class CreateUserUseCase {
     }
 
     public UserEntity execute(UserEntity userEntity) {
-        this.userRepository
+        userRepository
                 .findByEmail(userEntity.getEmail())
                 .ifPresent((user) -> {
                     throw new BusinessRuleException("Email already exists: " + userEntity.getEmail());
@@ -27,7 +27,7 @@ public class CreateUserUseCase {
         var password = this.passwordEncoder.encode(userEntity.getPassword());
         userEntity.setPassword(password);
 
-        return this.userRepository.save(userEntity);
+        return userRepository.save(userEntity);
     }
 
 }

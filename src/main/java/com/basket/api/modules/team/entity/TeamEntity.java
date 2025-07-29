@@ -2,6 +2,7 @@ package com.basket.api.modules.team.entity;
 
 import com.basket.api.modules.teamCategory.entity.TeamCategoryEntity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
