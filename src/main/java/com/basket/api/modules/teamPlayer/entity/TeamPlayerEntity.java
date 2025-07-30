@@ -1,5 +1,6 @@
 package com.basket.api.modules.teamPlayer.entity;
 
+import com.basket.api.modules.category.entity.CategoryEntity;
 import com.basket.api.modules.team.entity.TeamEntity;
 import com.basket.api.modules.player.entity.PlayerEntity;
 import jakarta.persistence.*;
@@ -24,6 +25,10 @@ public class TeamPlayerEntity {
     @ManyToOne
     @JoinColumn(name = "player_id", nullable = false)
     private PlayerEntity player;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private CategoryEntity category;
 
     @Column(nullable = false)
     private Boolean isActive;

@@ -1,25 +1,26 @@
 package com.basket.api.modules.teamPlayer.useCases;
 
-import com.basket.api.modules.teamPlayer.records.ListPlayersDTO;
-import com.basket.api.modules.teamPlayer.entity.TeamPlayerEntity;
-import com.basket.api.modules.teamPlayer.repository.TeamPlayerRepository;
 import com.basket.api.modules.player.entity.PlayerEntity;
+import com.basket.api.modules.teamPlayer.entity.TeamPlayerEntity;
+import com.basket.api.modules.teamPlayer.records.ListPlayersDTO;
+import com.basket.api.modules.teamPlayer.repository.TeamPlayerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
-public class ListPlayerByTeamUseCase {
+public class ListPlayersByTeamAndCategoryUseCase {
 
     private final TeamPlayerRepository teamPlayerRepository;
 
-    public ListPlayerByTeamUseCase(TeamPlayerRepository teamPlayerRepository) {
+    public ListPlayersByTeamAndCategoryUseCase(TeamPlayerRepository teamPlayerRepository) {
         this.teamPlayerRepository = teamPlayerRepository;
     }
 
-    public List<ListPlayersDTO> execute(UUID teamId) {
-        List<TeamPlayerEntity> teamPlayers = teamPlayerRepository.findByTeamIdAndIsActive(teamId, true);
+    public List<ListPlayersDTO> execute(UUID teamId, UUID categoryId){
+        List<TeamPlayerEntity> teamPlayers = teamPlayerRepository.findByTeamIdAndCategoryIdAndIsActive(teamId, categoryId, true);
 
         return teamPlayers.stream()
                 .map(teamPlayer -> {
@@ -37,6 +38,7 @@ public class ListPlayerByTeamUseCase {
                             teamPlayer.getCategory().getName()
                     );
                 })
-                .toList();
+                .collect(Collectors.toList());
+
     }
 }

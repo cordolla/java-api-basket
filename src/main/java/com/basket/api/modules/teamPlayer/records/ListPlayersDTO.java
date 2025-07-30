@@ -12,6 +12,7 @@ public record ListPlayersDTO(
         Date birthDate,
         Float height,
         Integer jerseyNumber,
-        String photoURL
+        String photoURL,
+        String categoryName
 ) {
 }

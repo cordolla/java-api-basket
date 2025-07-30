@@ -1,5 +1,6 @@
 package com.basket.api.modules.league.entity;
 
+import com.basket.api.modules.category.entity.CategoryEntity;
 import com.basket.api.modules.user.entity.UserEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
@@ -34,6 +35,10 @@ public class LeagueEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private CategoryEntity category;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -2,8 +2,11 @@ package com.basket.api.modules.league.controller;
 
 
 import com.basket.api.modules.league.entity.LeagueEntity;
+import com.basket.api.modules.league.records.LeagueRequestDTO;
+import com.basket.api.modules.league.records.LeagueResponseDTO;
 import com.basket.api.modules.league.useCases.CreateLeagueUseCase;
 import com.basket.api.modules.league.useCases.GetLeagueByIdUseCase;
+import com.basket.api.modules.league.useCases.ListLeagueUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -13,6 +16,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,10 +28,12 @@ public class LeagueController {
 
     private final CreateLeagueUseCase createLeagueUseCase;
     private final GetLeagueByIdUseCase getLeagueByIdUseCase;
+    private final ListLeagueUseCase listLeaguesUseCase;
 
-    public LeagueController(CreateLeagueUseCase createLeagueUseCase, GetLeagueByIdUseCase getLeagueByIdUseCase) {
+    public LeagueController(CreateLeagueUseCase createLeagueUseCase, GetLeagueByIdUseCase getLeagueByIdUseCase, ListLeagueUseCase listLeaguesUseCase) {
         this.createLeagueUseCase = createLeagueUseCase;
         this.getLeagueByIdUseCase = getLeagueByIdUseCase;
+        this.listLeaguesUseCase = listLeaguesUseCase;
     }
 
     @PostMapping
@@ -37,8 +43,8 @@ public class LeagueController {
             @ApiResponse(responseCode = "403", description = "Acesso negado"),
             @ApiResponse(responseCode = "409", description = "Liga com este nome já existe")
     })
-    public ResponseEntity<Object> createUser(@Valid @RequestBody LeagueEntity league) {
-        var result = this.createLeagueUseCase.execute(league);
+    public ResponseEntity<Object> createLeague(@Valid @RequestBody LeagueRequestDTO leagueRequestDTO) {
+        var result = this.createLeagueUseCase.execute(leagueRequestDTO);
         return ResponseEntity.ok().body(result);
     }
 
@@ -48,9 +54,16 @@ public class LeagueController {
             @ApiResponse(responseCode = "200", description = "Busca bem-sucedida"),
             @ApiResponse(responseCode = "404", description = "Liga não encontrada")
     })
-    public ResponseEntity<Object> getUser(@PathVariable UUID id) {
-        LeagueEntity league = getLeagueByIdUseCase.execute(id);
-        return ResponseEntity.ok(league);
+    public ResponseEntity<LeagueResponseDTO> getLeague(@PathVariable UUID id) {
+        LeagueResponseDTO leagueResponse = getLeagueByIdUseCase.execute(id);
+        return ResponseEntity.ok(leagueResponse);
+    }
+
+    @GetMapping
+    @Operation(summary = "Busca todas as ligas", description = "Retorna todas as ligas cadastradas")
+    public ResponseEntity<List<LeagueResponseDTO>> getAllLeagues() {
+        var leagues = this.listLeaguesUseCase.execute();
+        return ResponseEntity.ok(leagues);
     }
 
 }
