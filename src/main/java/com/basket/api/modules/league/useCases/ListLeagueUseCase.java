@@ -1,26 +1,31 @@
 package com.basket.api.modules.league.useCases;
 
-import com.basket.api.exception.ResourceNotFoundException;
 import com.basket.api.modules.league.entity.LeagueEntity;
 import com.basket.api.modules.league.records.LeagueResponseDTO;
 import com.basket.api.modules.league.repository.LeagueRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class GetLeagueByIdUseCase {
-
+public class ListLeagueUseCase {
 
     private final LeagueRepository leagueRepository;
 
-    public GetLeagueByIdUseCase(LeagueRepository leagueRepository) {
+    public ListLeagueUseCase(LeagueRepository leagueRepository) {
         this.leagueRepository = leagueRepository;
     }
 
-    public LeagueResponseDTO execute(UUID id) {
-        LeagueEntity league = leagueRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Liga não encontrada com o ID: " + id));
+    public List<LeagueResponseDTO> execute(){
+        List<LeagueEntity> leagues = leagueRepository.findAll();
+
+        return leagues.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private LeagueResponseDTO convertToDTO(LeagueEntity league) {
 
         return new LeagueResponseDTO(
                 league.getId(),

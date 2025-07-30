@@ -30,7 +30,7 @@ public class teamCategoryController {
         this.listTeamCategoryUseCase = listTeamCategoryUseCase;
     }
 
-    @PostMapping("/{categoryId}")
+    @PostMapping("/add/{categoryId}")
     @Operation(summary = "Adiciona um time a uma categoria", description = "Cria a associação entre um time e uma categoria. Requer autenticação de ADMIN.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Associação criada com sucesso"),

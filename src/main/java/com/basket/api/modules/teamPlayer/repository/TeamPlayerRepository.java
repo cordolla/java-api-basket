@@ -1,5 +1,6 @@
 package com.basket.api.modules.teamPlayer.repository;
 
+import com.basket.api.modules.category.entity.CategoryEntity;
 import com.basket.api.modules.team.entity.TeamEntity;
 import com.basket.api.modules.teamPlayer.entity.TeamPlayerEntity;
 import com.basket.api.modules.player.entity.PlayerEntity;
@@ -17,10 +18,16 @@ public interface TeamPlayerRepository extends JpaRepository<TeamPlayerEntity, UU
     Optional<TeamPlayerEntity> findByTeamAndPlayerAndIsActive(TeamEntity team, PlayerEntity player, Boolean isActive);
     List<TeamPlayerEntity> findByTeamIdAndIsActive(UUID teamId,  Boolean isActive);
 
+    List<TeamPlayerEntity> findByTeamIdAndCategoryIdAndIsActive(UUID teamId, UUID categoryId, Boolean isActive);
+
     List<TeamPlayerEntity> findByPlayerAndIsActive(PlayerEntity player, Boolean isActive);
+
+    Optional<TeamPlayerEntity> findByPlayerAndCategoryAndIsActive(PlayerEntity player, CategoryEntity category, Boolean isActive);
 
     @Modifying
     @Transactional
     @Query("UPDATE team_player tp SET tp.isActive = false, tp.endDate = CURRENT_TIMESTAMP WHERE tp.player = :player AND tp.isActive = true")
     void desactivatePreviousAssociations(@Param("player") PlayerEntity player);
+
+
 }
