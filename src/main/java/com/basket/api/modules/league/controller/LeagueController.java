@@ -4,8 +4,10 @@ package com.basket.api.modules.league.controller;
 import com.basket.api.modules.league.entity.LeagueEntity;
 import com.basket.api.modules.league.records.LeagueRequestDTO;
 import com.basket.api.modules.league.records.LeagueResponseDTO;
+import com.basket.api.modules.league.records.TeamStandingsDTO;
 import com.basket.api.modules.league.useCases.CreateLeagueUseCase;
 import com.basket.api.modules.league.useCases.GetLeagueByIdUseCase;
+import com.basket.api.modules.league.useCases.GetLeagueStandingsUseCase;
 import com.basket.api.modules.league.useCases.ListLeagueUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,11 +31,13 @@ public class LeagueController {
     private final CreateLeagueUseCase createLeagueUseCase;
     private final GetLeagueByIdUseCase getLeagueByIdUseCase;
     private final ListLeagueUseCase listLeaguesUseCase;
+    private final GetLeagueStandingsUseCase getLeagueStandingsUseCase;
 
-    public LeagueController(CreateLeagueUseCase createLeagueUseCase, GetLeagueByIdUseCase getLeagueByIdUseCase, ListLeagueUseCase listLeaguesUseCase) {
+    public LeagueController(CreateLeagueUseCase createLeagueUseCase, GetLeagueByIdUseCase getLeagueByIdUseCase, ListLeagueUseCase listLeaguesUseCase, GetLeagueStandingsUseCase getLeagueStandingsUseCase) {
         this.createLeagueUseCase = createLeagueUseCase;
         this.getLeagueByIdUseCase = getLeagueByIdUseCase;
         this.listLeaguesUseCase = listLeaguesUseCase;
+        this.getLeagueStandingsUseCase = getLeagueStandingsUseCase;
     }
 
     @PostMapping
@@ -64,6 +68,14 @@ public class LeagueController {
     public ResponseEntity<List<LeagueResponseDTO>> getAllLeagues() {
         var leagues = this.listLeaguesUseCase.execute();
         return ResponseEntity.ok(leagues);
+    }
+
+    @GetMapping("/{leagueId}/standings")
+    @Operation(summary = "Busca a tabela de classificação de uma liga",
+            description = "Retorna uma lista ordenada de times com suas respectivas estatísticas (pontos, vitórias, saldo, etc.)")
+    public ResponseEntity<List<TeamStandingsDTO>> getStandings(@PathVariable UUID leagueId) {
+        List<TeamStandingsDTO> standings = getLeagueStandingsUseCase.execute(leagueId);
+        return ResponseEntity.ok(standings);
     }
 
 }
