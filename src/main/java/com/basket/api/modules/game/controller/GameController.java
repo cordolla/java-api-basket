@@ -2,6 +2,7 @@ package com.basket.api.modules.game.controller;
 
 import com.basket.api.modules.game.records.GameRequestDTO;
 import com.basket.api.modules.game.entity.GameEntity;
+import com.basket.api.modules.game.records.GameResponseDTO;
 import com.basket.api.modules.game.useCases.CreateGameUseCase;
 import com.basket.api.modules.game.useCases.ListGameByLeagueIdUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,20 +40,20 @@ public class GameController {
             @ApiResponse(responseCode = "404", description = "Liga ou time não encontrado")
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<GameEntity> createGame(@RequestBody GameRequestDTO gameRequestDTO) {
-        GameEntity game = createGameUseCase.execute(gameRequestDTO);
+    public ResponseEntity<GameResponseDTO> createGame(@RequestBody GameRequestDTO gameRequestDTO) {
+        GameResponseDTO game = createGameUseCase.execute(gameRequestDTO);
         return ResponseEntity.ok(game);
     }
 
-    @GetMapping("/league/{id}")
+    @GetMapping("/league/{leagueId}")
     @Operation(summary = "Lista todos os jogos de uma liga", description = "Retorna uma lista de jogos para um ID de liga específico.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Busca bem-sucedida"),
             @ApiResponse(responseCode = "404", description = "Liga não encontrada")
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<List<GameEntity>> listGamesByLeague(@PathVariable UUID id) {
-        List<GameEntity> list = listGameByLeagueIdUseCase.execute(id);
+    public ResponseEntity<List<GameResponseDTO>> listGamesByLeague(@PathVariable UUID leagueId) {
+        List<GameResponseDTO> list = listGameByLeagueIdUseCase.execute(leagueId);
         return ResponseEntity.ok(list);
     }
 }

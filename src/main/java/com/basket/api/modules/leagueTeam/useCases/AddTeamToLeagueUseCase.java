@@ -4,6 +4,7 @@ import com.basket.api.exception.BusinessRuleException;
 import com.basket.api.exception.ResourceNotFoundException;
 import com.basket.api.modules.leagueTeam.entity.LeagueTeamEntity;
 import com.basket.api.modules.leagueTeam.entity.TeamStatus;
+import com.basket.api.modules.leagueTeam.records.LeagueTeamResponseDTO;
 import com.basket.api.modules.leagueTeam.repository.LeagueTeamRepository;
 import com.basket.api.modules.team.entity.TeamEntity;
 import com.basket.api.modules.team.repository.TeamRepository;
@@ -26,7 +27,7 @@ public class AddTeamToLeagueUseCase {
         this.leagueRepository = leagueRepository;
     }
 
-    public LeagueTeamEntity execute(UUID leagueId, UUID teamId) {
+    public LeagueTeamResponseDTO execute(UUID leagueId, UUID teamId) {
         LeagueEntity league = leagueRepository.findById(leagueId)
                 .orElseThrow(() -> new ResourceNotFoundException("League não existe"));
 
@@ -38,12 +39,20 @@ public class AddTeamToLeagueUseCase {
             throw new BusinessRuleException("Team already added to this league");
         }
 
-        // Criar associação
         LeagueTeamEntity leagueTeam = new LeagueTeamEntity();
         leagueTeam.setTeamStatus(TeamStatus.ACTIVE);
         leagueTeam.setLeague(league);
         leagueTeam.setTeam(team);
 
-        return leagueTeamRepository.save(leagueTeam);
+        LeagueTeamEntity savedAssociation = leagueTeamRepository.save(leagueTeam);
+
+        return new LeagueTeamResponseDTO(
+                savedAssociation.getId(),
+                savedAssociation.getLeague().getId(),
+                savedAssociation.getLeague().getName(),
+                savedAssociation.getTeam().getId(),
+                savedAssociation.getTeam().getName(),
+                savedAssociation.getCreatedAt()
+        );
     }
 }

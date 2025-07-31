@@ -20,6 +20,8 @@ public interface TeamPlayerRepository extends JpaRepository<TeamPlayerEntity, UU
 
     List<TeamPlayerEntity> findByTeamIdAndCategoryIdAndIsActive(UUID teamId, UUID categoryId, Boolean isActive);
 
+    Optional<TeamPlayerEntity> findByTeamIdAndPlayerIdAndCategoryIdAndIsActive(UUID teamId, UUID playerId, UUID categoryId, boolean isActive);
+
     List<TeamPlayerEntity> findByPlayerAndIsActive(PlayerEntity player, Boolean isActive);
 
     Optional<TeamPlayerEntity> findByPlayerAndCategoryAndIsActive(PlayerEntity player, CategoryEntity category, Boolean isActive);
@@ -28,6 +30,5 @@ public interface TeamPlayerRepository extends JpaRepository<TeamPlayerEntity, UU
     @Transactional
     @Query("UPDATE team_player tp SET tp.isActive = false, tp.endDate = CURRENT_TIMESTAMP WHERE tp.player = :player AND tp.isActive = true")
     void desactivatePreviousAssociations(@Param("player") PlayerEntity player);
-
 
 }

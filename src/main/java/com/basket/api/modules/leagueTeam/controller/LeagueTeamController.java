@@ -48,8 +48,8 @@ public class LeagueTeamController {
             @ApiResponse(responseCode = "200", description = "Busca bem-sucedida"),
             @ApiResponse(responseCode = "404", description = "Liga não encontrada")
     })
-    public ResponseEntity<List<ListTeamDTO>> getTeam(@PathVariable UUID id) {
-        List<ListTeamDTO> result = listLeagueTeamsUseCase.execute(id);
+    public ResponseEntity<List<ListTeamDTO>> getTeam(@PathVariable UUID leagueId) {
+        List<ListTeamDTO> result = listLeagueTeamsUseCase.execute(leagueId);
         return ResponseEntity.ok().body(result);
     }
 }
