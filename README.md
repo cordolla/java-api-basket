@@ -33,23 +33,6 @@ Esta API foi projetada para ser uma solução completa para organizar e gerencia
 
 O projeto é organizado em módulos, seguindo as melhores práticas de arquitetura de software para garantir a separação de responsabilidades e a manutenibilidade.
 
-com.basket.api
-├── modules
-│   ├── user
-│   ├── category
-│   ├── team
-│   ├── player
-│   ├── league
-│   ├── leagueTeam
-│   ├── teamCategory
-│   ├── teamPlayer
-│   ├── game
-│   ├── gameEvent
-│   └── stats
-├── security
-├── providers
-├── exception
-└── config
 
 -   **`modules`**: Contém a lógica de negócio principal, separada por funcionalidades (módulos). Cada módulo possui suas próprias `entities`, `repositories`, `useCases` (serviços) e `controllers`.
 -   **`security`**: Classes relacionadas à configuração de segurança e filtros de autenticação.
